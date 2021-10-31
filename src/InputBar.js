@@ -1,29 +1,28 @@
 import React from 'react';
 import {v4 as uuid} from 'uuid';
 
-class InputBox extends React.Component{
+class InputBar extends React.Component{
 
     constructor(props){
         super(props);
         this.state = {
-            input: ''
+            value: ''
         }
     }
 
-    handleInput = (e) => {
-        let val = e.target.value;
-        this.setState({input: val});
+    handleInputChange = (e) => {
+        this.setState({value: e.target.value});
     }
 
     // 按下回车键添加todo项
     handlePressReturn = (e) => {
-        if(e.charCode === 13 && this.state.input !== ''){
+        if(e.charCode === 13 && this.state.value !== ''){
             let item = {};
             item.id = uuid();
-            item.content = this.state.input;
+            item.content = this.state.value;
             item.completed = false;
             this.props.handleAdd(item);
-            this.setState({input:''});
+            this.setState({value:''});
         }
     }
 
@@ -35,13 +34,13 @@ class InputBox extends React.Component{
                     onChange={this.props.handleSelectAll}
                     checked={this.props.isAllCompleted}/>
                 <input 
-                onChange={this.handleInput} 
-                value={this.state.input} 
+                onChange={this.handleInputChange} 
+                value={this.state.value} 
                 placeholder="what needs to be done?"
-                onKeyPress={this.handlePressReturn}></input>
+                onKeyPress={this.handlePressReturn}/>
             </div>
         )
     }
 }
 
-export default InputBox;
+export default InputBar;

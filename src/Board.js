@@ -3,28 +3,31 @@ import TodoItem from './TodoItem'
 
 export default function Board(props){
     let showList;
+    let {allTodos, activeTodos, completedTodos} = props.todos;
     switch(props.mode){
       case 'All':
-          showList = props.todoList.map((item)=>(
-              <TodoItem key={item.id} {...item} handleCompleteClick={props.handleCompleteClick}></TodoItem>
-          ));
+          showList = allTodos;
           break;
       case 'Active':
-          showList = props.todoList.filter(item=>!item.completed).map((item)=>(
-            <TodoItem key={item.id} {...item} handleCompleteClick={props.handleCompleteClick}></TodoItem>
-          ))
+          showList = activeTodos;
           break;
       case 'Completed':
-          showList = props.todoList.filter(item=>item.completed).map((item)=>(
-            <TodoItem key={item.id} {...item} handleCompleteClick={props.handleCompleteClick}></TodoItem>
-          ))
+          showList = completedTodos;
           break;
       default:
-          showList = props.todoList;
+          showList = allTodos;
     }
     return (
         <ul>
-            { showList }
+            { 
+            showList.map((item)=>(
+                <TodoItem 
+                key={item.id} 
+                {...item}
+                handleEdit={props.handleEdit} 
+                handleCompleteClick={props.handleCompleteClick}></TodoItem>
+            )) 
+          }
         </ul>
     )
 }
