@@ -9,11 +9,15 @@ export default class TodoItem extends React.Component{
                 display: 'none'
             },
             viewStyle: {
-                display: 'block'
+                display: 'flex'
+            },
+            delBtnStyle: {
+                display: 'none'
             }
         }
     }
 
+    // 双击进行编辑
     handleDoubleClick = ()=>{
         let value = this.props.content;
         this.setState({
@@ -40,15 +44,31 @@ export default class TodoItem extends React.Component{
                 display: 'none'
             },
             viewStyle: {
-                display: 'block'
+                display: 'flex'
             }
         })
         this.props.handleEdit(this.props.id, this.state.value);
     }
 
+    showDelBtn = () => {
+        this.setState({
+            delBtnStyle:{
+                display: 'block'
+            }
+        })
+    }
+
+    hideDelBtn = () => {
+        this.setState({
+            delBtnStyle:{
+                display: 'none'
+            }
+        })
+    }
+
     render(){
-        let {completed, handleCompleteClick, content, id} = this.props;
-        let {value, editStyle, viewStyle} = this.state;
+        let {completed, handleCompleteClick, content, id, handleDeleteClick} = this.props;
+        let {value, editStyle, viewStyle, delBtnStyle} = this.state;
         
         let labelStyle = {
             textDecoration : !completed ? 'none' : 'line-through',
@@ -56,7 +76,11 @@ export default class TodoItem extends React.Component{
         }
         return (
             <li>
-                <div style={viewStyle}>
+                <div 
+                className='todo-item' 
+                style={viewStyle}
+                onMouseEnter={()=>this.showDelBtn()}
+                onMouseLeave={()=>this.hideDelBtn()}>
                     <input 
                     type="checkbox"
                     checked={completed}
@@ -64,6 +88,11 @@ export default class TodoItem extends React.Component{
                     <label 
                     style={labelStyle} 
                     onDoubleClick={this.handleDoubleClick}>{content}</label>
+                    <div 
+                    id='delete-btn'
+                    style={delBtnStyle}
+                    onClick={()=>handleDeleteClick(id)}
+                    >&#735;</div>
                 </div>
                 <input 
                 id={id}

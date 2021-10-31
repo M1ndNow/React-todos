@@ -53,7 +53,6 @@ class App extends React.Component{
     this.setState({
       todos
     });
-    
   }
 
   // 点击todo，修改completed状态
@@ -217,21 +216,45 @@ class App extends React.Component{
     })
   }
 
+  // 点击删除
+  handleDeleteClick = (id) => {
+    let {allTodos, activeTodos, completedTodos} = this.state.todos;
+    let {cache} = this.state;
+    allTodos = allTodos.filter(item => item.id !== id);
+    activeTodos = activeTodos.filter(item => item.id !== id);
+    completedTodos = completedTodos.filter(item => item.id !== id);
+    cache = cache.filter(item => item.id !== id);
+    let todos = {
+      allTodos,
+      activeTodos,
+      completedTodos
+    }
+    localStorage.setItem('todos', JSON.stringify(todos));
+    localStorage.setItem('cache', JSON.stringify(cache));
+    this.setState({
+      todos
+    })
+  }
+
   render(){
     let {allTodos, completedTodos} = this.state.todos;
     let {mode} = this.state;
     return (
       <div>
-        <InputBar 
+      <div className="container">
+        <h1>todos</h1>
+        <InputBar
+          {...this.state.todos}
           handleAdd={this.handleAdd}
           isAllCompleted={allTodos.length>0 && allTodos.length === completedTodos.length}
           handleSelectAll={this.handleSelectAll}/>
-        <Board 
+        <Board
           todos={this.state.todos} 
           mode={mode}
           handleEdit={this.handleEdit}
+          handleDeleteClick={this.handleDeleteClick}
           handleCompleteClick={this.handleCompleteClick}></Board>
-        <Footer 
+        <Footer
           todos={this.state.todos}
           mode={mode}
           cache={this.state.cache}
@@ -239,6 +262,7 @@ class App extends React.Component{
           handleRedo={this.handleRedo}
           handleClearClick={this.handleClearClick}
           handleModeChange={this.handleModeChange}></Footer>
+      </div>
       </div>
     );
   }

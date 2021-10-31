@@ -18,13 +18,14 @@ export default function Board(props){
           showList = allTodos;
     }
     return (
-        <ul>
+        <ul className='board' >
             { 
             showList.map((item)=>(
                 <TodoItem 
                 key={item.id} 
                 {...item}
-                handleEdit={props.handleEdit} 
+                handleEdit={props.handleEdit}
+                handleDeleteClick={props.handleDeleteClick} 
                 handleCompleteClick={props.handleCompleteClick}></TodoItem>
             )) 
           }

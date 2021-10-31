@@ -28,7 +28,7 @@ class InputBar extends React.Component{
 
     render(){
         return (
-            <div>
+            <div className='input-bar'>
                 <input
                     type="checkbox" 
                     onChange={this.props.handleSelectAll}
@@ -36,7 +36,7 @@ class InputBar extends React.Component{
                 <input 
                 onChange={this.handleInputChange} 
                 value={this.state.value} 
-                placeholder="what needs to be done?"
+                placeholder='What needs to be done?'
                 onKeyPress={this.handlePressReturn}/>
             </div>
         )
