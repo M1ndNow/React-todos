@@ -27,15 +27,17 @@ class InputBar extends React.Component{
     }
 
     render(){
+        let {handleSelectAll, isAllCompleted} = this.props;
+        let {value} = this.state;
         return (
             <div className='input-bar'>
                 <input
-                    type="checkbox" 
-                    onChange={this.props.handleSelectAll}
-                    checked={this.props.isAllCompleted}/>
+                    type='checkbox'
+                    onChange={handleSelectAll}
+                    checked={isAllCompleted}/>
                 <input 
                 onChange={this.handleInputChange} 
-                value={this.state.value} 
+                value={value} 
                 placeholder='What needs to be done?'
                 onKeyPress={this.handlePressReturn}/>
             </div>

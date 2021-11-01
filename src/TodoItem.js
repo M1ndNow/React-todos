@@ -5,7 +5,7 @@ export default class TodoItem extends React.Component{
         super(props);
         this.state = {
             value: '',
-            editStyle: {
+            editorStyle: {
                 display: 'none'
             },
             viewStyle: {
@@ -22,7 +22,7 @@ export default class TodoItem extends React.Component{
         let value = this.props.content;
         this.setState({
             value,
-            editStyle: {
+            editorStyle: {
                 display: 'block'
             },
             viewStyle: {
@@ -40,7 +40,7 @@ export default class TodoItem extends React.Component{
 
     handleBlur = () => {
         this.setState({
-            editStyle: {
+            editorStyle: {
                 display: 'none'
             },
             viewStyle: {
@@ -68,7 +68,7 @@ export default class TodoItem extends React.Component{
 
     render(){
         let {completed, handleCompleteClick, content, id, handleDeleteClick} = this.props;
-        let {value, editStyle, viewStyle, delBtnStyle} = this.state;
+        let {value, editorStyle, viewStyle, delBtnStyle} = this.state;
         
         let labelStyle = {
             textDecoration : !completed ? 'none' : 'line-through',
@@ -79,8 +79,8 @@ export default class TodoItem extends React.Component{
                 <div 
                 className='todo-item' 
                 style={viewStyle}
-                onMouseEnter={()=>this.showDelBtn()}
-                onMouseLeave={()=>this.hideDelBtn()}>
+                onMouseEnter={this.showDelBtn}
+                onMouseLeave={this.hideDelBtn}>
                     <input 
                     type="checkbox"
                     checked={completed}
@@ -96,7 +96,7 @@ export default class TodoItem extends React.Component{
                 </div>
                 <input 
                 id={id}
-                style={editStyle} 
+                style={editorStyle} 
                 value={value}
                 onBlur={this.handleBlur}
                 onChange={this.handleValueChange}/>
