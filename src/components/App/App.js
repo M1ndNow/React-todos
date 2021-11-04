@@ -131,7 +131,6 @@ export default function App() {
 				handleCompleteClick={handleCompleteClick}
 			/>
 			<Footer
-				todos={todos}
 				activeNum={activeTodos.length}
 				completedNum={completedTodos.length}
 				mode={mode}
